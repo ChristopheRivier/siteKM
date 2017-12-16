@@ -12,7 +12,7 @@ function connectionbase()
   if ($conn->connect_error) {
       die("Connection failed: " . $conn->connect_error);
   }
-  
+
   return $conn;
 }
 function ecritEntete()
@@ -39,11 +39,16 @@ echo '
         <li><a href="#">Accueil</a></li>
         <li><a href="#">Saisie</a>
           <ul>
-            <li><a href="insert_velo.php">Vélo</a>
             <li><a href="insert_sortie.php">Sortie</a>
+            <li><a href="insert_velo.php">Vélo</a>
           </ul>
         </li>
-        <li><a href="affichage.php">Affichage</a></li>
+        <li><a href="#">Affichage</a>
+        <ul>
+          <li><a href="aff_sortie.php">Sortie</a>
+          <li><a href="aff_velo.php">Vélo</a>
+        </ul>
+        </li>
     </ul>
 </nav>
 ';
