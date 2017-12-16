@@ -5,45 +5,32 @@ include ("util.php");
 
 // get the information and affiche...
 // confirm or not
-
-$isconfirm=$_GET['isconfirm'];
 ecritEntete();
 ecritHeaderMenu();
-echo ' ecriture de mmm '.$isconfirm.'exnd';
-if( !$isconfirm || $isconfirm<>'Y'){
-  echo '<section>
-      <p>
-        Velo: ';
-        echo  $_POST['nomvelo'];
-        echo '
-      </p>
-      <p>
-        <label>Date Acquisition</label> '. $_POST['datein'].'
-      </p><p>
-        <label>Date D arret d utilisation</label>'.$_POST['dateout'].'
-      </p><p>
-        <label>Description Velo</label>'.$_POST['description'].'
-      </p>
-<a href="add_velo.php?isconfirm=Y">Confirm</a>
-  </section>';
 
-}else {
-  echo '<section>
-      <p>
-        Velo: '. $_POST['nomvelo'].'
-      </p>
-      <p>
-        <label>Date Acquisition</label> '. $_POST['datein'].'
-      </p><p>
-        <label>Date D arret d utilisation</label>'.$_POST['dateout'].'
-      </p><p>
-        <label>Description Velo</label>'.$_POST['description'].'
-      </p>
-
-  </section>';
+/*Add velo*/
+// connect to database
+$conn = connectionbase();
 
 
+// insert statment
+$name=$_POST['nomvelo'];
+$description=$_POST['description'];
+$datein = $_POST['datein'];
+$dateout= $_POST['dateout'];
+
+$sql = "INSERT INTO velo(name,description, datein, dateout)
+VALUES ('$name','$description',STR_TO_DATE('$datein','%d/%m/%Y'),STR_TO_DATE('$dateout','%d/%m/%Y') )";
+
+if ($conn->query($sql) === TRUE) {
+    echo "New record created successfully";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
 }
+
+$conn->close();
+
+
 
 ecritFin();
 ?>

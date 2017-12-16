@@ -1,11 +1,19 @@
 <?php
 function connectionbase()
 {
-$sql_serveur = "sql.free.fr";
-$sql_user= "chrivier";
-$sql_passwd = "2TAureau";
-$db_link = mysql_connect("$sql_serveur","$sql_user","$sql_passwd");
-return $db_link;
+  $servername = "sql.free.fr";
+  $username= "chrivier";
+  $password = "2TAureau";
+
+
+  $conn = new mysqli($servername, $username, $password);
+
+  // Check connection
+  if ($conn->connect_error) {
+      die("Connection failed: " . $conn->connect_error);
+  }
+  
+  return $conn;
 }
 function ecritEntete()
 {
@@ -27,11 +35,16 @@ echo '
     <h2>Kilometre...</h2>
 </header>
 <nav>
-    <dl>
+    <ul>
         <li><a href="#">Accueil</a></li>
-        <li><a href="insert.php">Saisie</a></li>
-        <li><a href="insert_velo.php">Saisie</a></li>
-    </dl>
+        <li><a href="#">Saisie</a>
+          <ul>
+            <li><a href="insert_velo.php">Vélo</a>
+            <li><a href="insert_sortie.php">Sortie</a>
+          </ul>
+        </li>
+        <li><a href="affichage.php">Affichage</a></li>
+    </ul>
 </nav>
 ';
 
