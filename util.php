@@ -39,14 +39,15 @@ echo '
         <li><a href="#">Accueil</a></li>
         <li><a href="#">Saisie</a>
           <ul>
-            <li><a href="insert_sortie.php">Sortie</a>
-            <li><a href="insert_velo.php">Vélo</a>
+            <li><a href="insert_sortie.php">Sortie</a></li>
+            <li><a href="insert_velo.php">Vélo</a></li>
           </ul>
         </li>
         <li><a href="#">Affichage</a>
         <ul>
-          <li><a href="aff_sortie.php">Sortie</a>
-          <li><a href="aff_velo.php">Vélo</a>
+          <li><a href="aff_sortie.php">Sortie</a></li>
+          <li><a href="aff_velo.php">Vélo</a></li>
+          <li><a href="aff_stat.php">Statistic</a></li>
         </ul>
         </li>
     </ul>
