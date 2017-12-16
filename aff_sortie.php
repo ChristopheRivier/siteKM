@@ -41,7 +41,7 @@ while ($row = $res->fetch_assoc()) {
     echo "</tr>";
 }
 echo "</table>";
-
+$res->close();
 $conn->close();
 
 
