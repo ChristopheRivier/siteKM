@@ -1,4 +1,5 @@
 <?php
+
 function connectionbase()
 {
   $servername = "sql.free.fr";
@@ -15,6 +16,24 @@ function connectionbase()
 
   return $conn;
 }
+function checkConnection()
+{
+  $conn = connectionbase();
+
+  $sql = "SELECT id  FROM membre_ where id='".$_SESSION["id"]."' and pass='".$_SESSION["pass"]."'";
+  $result = $conn->query($sql);
+  $res = false;
+  if ($result->num_rows == 1) {
+      // output data of each row
+      while($row = $result->fetch_assoc()) {
+          $res=true;
+      }
+  }
+  $result->close();
+  $conn->close();
+  return $res;
+}
+
 function ecritEntete()
 {
 echo '<!DOCTYPE html>';

@@ -1,18 +1,21 @@
 <?php
-
+session_start();
 include ("util.php");
 
 ecritEntete();
 ecritHeaderMenu();
 
 // create formulaire
-?>
+if( checkConnection() ){
+  echo "<section> Your are connected with ".$_SESSION["id"]."</section>";
+}else{
 
+?>
 
 <script>
 function showHint(str) {
    if (str.length == 0) {
-       document.getElementById("txtHint").innerHTML = "";
+       document.getElementById("txtHint").innerHTML = "ava";
        return;
    } else {
        var xmlhttp = new XMLHttpRequest();
@@ -26,17 +29,9 @@ function showHint(str) {
    }
 }
 </script>
-
-
-<p><b>Start typing a name in the input field below:</b></p>
-<form>
-First name: <input type="text" onkeyup="showHint(this.value)">
-</form>
-<p>Suggestions: <span id="txtHint"></span></p>
-
-<div id="resultat"> </div>
 <section>
-  <form id="connexion" action="JavaScript:showHint('crr')">
+  <div id="txtHint" ></div>
+  <form id="connexion" action="add_user.php" method="POST">
     <p>
       <label>Login</label>
       <input type="text" id="login" placeholder="Login..." name="login" size="100"/>
@@ -60,5 +55,7 @@ First name: <input type="text" onkeyup="showHint(this.value)">
 </section>
 
 <?php
+}
+
 ecritFin();
 ?>
