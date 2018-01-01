@@ -23,6 +23,22 @@ echo '   <head>'."\n";
 echo ' <meta charset="utf-8" />'."\n";
 echo ' <link rel="stylesheet" href="km.css"/>'."\n";
 echo ' <title>Saisie des km</title>'."\n";
+echo '<script type="text/javascript">
+function handleClick(){
+
+  var xmlhttp = new XMLHttpRequest();
+          xmlhttp.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 200) {
+                  document.getElementById("resultat").innerHTML = this.responseText;
+              }
+          };
+          xmlhttp.open("GET", "gethint.php?q=c", true);
+          xmlhttp.send();
+
+
+}
+
+</script>';
 echo'   </head>'."\n";
 echo'   <body>'."\n";
 }

@@ -28,6 +28,13 @@ function showHint(str) {
 </script>
 
 
+<p><b>Start typing a name in the input field below:</b></p>
+<form>
+First name: <input type="text" onkeyup="showHint(this.value)">
+</form>
+<p>Suggestions: <span id="txtHint"></span></p>
+
+<div id="resultat"> </div>
 <section>
   <form id="connexion" action="JavaScript:showHint('crr')">
     <p>
