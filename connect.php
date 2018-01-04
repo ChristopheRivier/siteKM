@@ -1,31 +1,30 @@
 <?php
+session_start();
+include ("util.php");
 
-    $username = "crr";
+ecritEntete();
+ecritHeaderMenu();
 
-    $password = "salut";
-echo "Success";
+// get information from form
+$login = $_POST['login'];
+$pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
 
-    if( isset($_REQUEST['login']) ){
+$conn = connectionbase();
 
+$sql = "select id from membre_ where login ='$login' and pass='$pass'";
 
-        if($_REQUEST['login'] == $username ){ // Si les infos correspondent...
+  $result=$conn->query($sql);
+  $res = false;
+  if ($result->num_rows == 1) {
+      // output data of each row
+      $row = $result->fetch_assoc();
+    $_SESSION["pass"] = $pass;
+    $_SESSION["id"] = $row['id'];
+	$res=true;
+}
+  
+$result->close();
+$conn->close();
 
-            session_start();
-
-            $_SESSION['user'] = $username;
-
-            echo "Success";
-
-        }
-
-        else{ // Sinon
-
-            echo "Failed";
-
-        }
-
-
-    }
-
-
+ecritFin();
 ?>

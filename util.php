@@ -1,4 +1,5 @@
 <?php
+
 function connectionbase()
 {
   $servername = "sql.free.fr";
@@ -15,13 +16,33 @@ function connectionbase()
 
   return $conn;
 }
+function checkConnection()
+{
+  $conn = connectionbase();
+
+  $sql = "SELECT id  FROM membre_ where id='".$_SESSION["id"]."' and pass='".$_SESSION["pass"]."'";
+  $result = $conn->query($sql);
+  $res = false;
+  if ($result->num_rows == 1) {
+      // output data of each row
+      while($row = $result->fetch_assoc()) {
+          $res=true;
+      }
+  }
+  $result->close();
+  $conn->close();
+  return $res;
+}
+
 function ecritEntete()
 {
 echo '<!DOCTYPE html>';
 echo '<html>'."\n"."\n";
 echo '   <head>'."\n";
 echo ' <meta charset="utf-8" />'."\n";
-echo ' <link rel="stylesheet" href="km.css"/>'."\n";
+echo ' <meta name="viewport" content="width=device-width, user-scalable=no"/>'."\n";
+echo ' <link rel="stylesheet" media="(min-width: 768px)" href="km.css"/>'."\n";
+echo ' <link rel="stylesheet" media="(max-width: 767px)" href="km2.css"/>'."\n";
 echo ' <title>Saisie des km</title>'."\n";
 echo '<script type="text/javascript">
 function handleClick(){
@@ -66,8 +87,16 @@ echo '
         </li>
         <li>
           <a href="profile.php">Membre</a>
-          <ul>
-              <li><a href="connexion.php">Login</a></li>
+          <ul>';
+if( checkConnection() ){
+	echo '
+              <li><a href="deconnect.php">Deconnection</a></li>';
+}else{
+	echo '
+            <li><a href="connexion.php">Login</a></li>
+              <li><a href="insert_user.php">Create User</a></li>';
+}
+echo '
           </ul>
         </li>
     </ul>
