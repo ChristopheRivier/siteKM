@@ -12,17 +12,17 @@ ecritHeaderMenu();
   <form action="add_velo.php" method="post">
     <p>
       <label> Velo:</label>
-      <input type="text" name="nomvelo" size="20"/>
+      <input type="text" placeholder="Name..." name="nomvelo" size="20"/>
     </p>
     <p>
       <label>Date Acquisition</label>
-      <input type="date" name="datein" />
+      <input type="date" name="datein" placeholder="dd/mm/yyyy"/>
     </p><p>
       <label>Date D'arret d'utilisation</label>
-      <input type="date" name="dateout"/>
+      <input type="date" name="dateout" placeholder="dd/mm/yyyy"/>
     </p><p>
       <label>Description Velo</label>
-      <input type="text" name="description" size="200"/>
+      <input type="text" name="description" placeholder="Description..." size="200"/>
     </p>
     <p>
     <input type="submit" value="Add velo">
