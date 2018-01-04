@@ -22,6 +22,9 @@ $sql = "select id from membre_ where login ='$login' and pass='$pass'";
     $_SESSION["id"] = $row['id'];
 	$res=true;
 }
+else{
+echo 'login failed';
+}
   
 $result->close();
 $conn->close();
