@@ -2,9 +2,10 @@
 
 function connectionbase()
 {
-  $servername = "sql.free.fr";
-  $username= "chrivier";
-  $password = "2TAureau";
+	 $ini_array = parse_ini_file("config.ini");
+  $servername = $ini_array['servername'];
+  $username= $ini_array['username'];
+  $password = $ini_array['password'];
 
 
   $conn = new mysqli($servername, $username, $password);
@@ -34,7 +35,7 @@ function checkConnection()
   return $res;
 }
 
-function ecritEntete()
+function ecritEntete( $script ='' )
 {
 echo '<!DOCTYPE html>';
 echo '<html>'."\n"."\n";
@@ -42,6 +43,7 @@ echo '   <head>'."\n";
 echo ' <meta charset="utf-8" />'."\n";
 echo ' <meta name="viewport" content="width=device-width, user-scalable=no"/>'."\n";
 echo ' <link rel="stylesheet" media="(min-width: 768px)" href="km.css"/>'."\n";
+echo ' <script src="jquery-3.3.1.js"></script>' ."\n";
 echo ' <link rel="stylesheet" media="(max-width: 767px)" href="km2.css"/>'."\n";
 echo ' <title>Saisie des km</title>'."\n";
 echo '<script type="text/javascript">
@@ -57,9 +59,9 @@ function handleClick(){
           xmlhttp.send();
 
 
-}
-
-</script>';
+}'."\n";
+echo $script."\n";
+echo '</script>'."\n";
 echo'   </head>'."\n";
 echo'   <body>'."\n";
 }

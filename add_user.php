@@ -2,9 +2,6 @@
 session_start();
 include ("util.php");
 
-ecritEntete();
-ecritHeaderMenu();
-
 // get information from form
 $login = $_POST['login'];
 $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
@@ -25,6 +22,8 @@ if ($conn->query($sql) === TRUE) {
 }
 
 $conn->close();
+ecritEntete();
+ecritHeaderMenu();
 
 ecritFin();
 ?>

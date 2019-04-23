@@ -1,6 +1,5 @@
-
 <?php
-
+session_start();
 include ("util.php");
 
 // get the information and affiche...

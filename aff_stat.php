@@ -1,6 +1,5 @@
-
 <?php
-
+session_start();
 include ("util.php");
 
 // get the information and affiche...
@@ -28,7 +27,26 @@ function tableauAnnuelle($ann){
 
   //list des velos
   global $conn;
-  $conn->real_query("SELECT name, id from velo ORDER BY id ASC");
+
+  $whereUserId = "user_id=".$_SESSION["id"];
+
+  $querySelectVelo="SELECT ";
+  if(isset($ann)) $querySelectVelo .= " month";
+  else $querySelectVelo .= " year";
+  $querySelectVelo.= "( date_sortie ) AS annee, sum( distance ) AS dist, v_id
+  FROM v_sortie ";
+  if(isset($ann)) $querySelectVelo .=" where year(date_sortie)=$ann and ".$whereUserId;
+  else $querySelectVelo .= "where ".$whereUserId;
+  $querySelectVelo .= "
+  GROUP BY ";
+  if(isset($ann)) $querySelectVelo .= " month";
+  else $querySelectVelo .= " year";
+  $querySelectVelo .="( date_sortie ) , v_id";
+
+  $conn->real_query("SELECT name, id from velo where id in (
+SELECT DISTINCT r.v_id
+FROM ( $querySelectVelo )r ) ORDER BY id ASC");
+
   $res = $conn->use_result();
   //construction requete en fonction du nombre de velo
   $query="";
@@ -59,23 +77,24 @@ function tableauAnnuelle($ann){
 
   // on itere sur les années
 
-  $query = "select f.annee,".$querySom.",".$somTotal.") as total from ( select t.annee," .$sousquery." FROM (
-
-  SELECT ";
-  if(isset($ann)) $query .= " month";
-  else $query .= " year";
-  $query.= "( date_sortie ) AS annee, sum( distance ) AS dist, v_id
-  FROM v_sortie ";
-  if(isset($ann)) $query .=" where year(date_sortie)=$ann ";
+  $query = "select f.annee,".$querySom.",".$somTotal.") as total from ( select t.annee," .$sousquery." FROM ( ";
+  $query .= $querySelectVelo;
   $query .= "
-  GROUP BY ";
-  if(isset($ann)) $query .= " month";
-  else $query .= " year";
-  $query .="( date_sortie ) , v_id
   )t
   )f
   GROUP BY f.annee";
-
+/*
+SELECT name, id from velo
+where id in (SELECT DISTINCT r.v_id
+FROM (
+SELECT year( c.date_sortie ) AS annee, sum( c.distance ) AS dist, c.v_id
+FROM v_sortie c
+WHERE c.user_id =13
+GROUP BY year( c.date_sortie ) , c.v_id
+)r)
+ ORDER BY id ASC
+;
+*/
   $conn->real_query($query);
   $res = $conn->use_result();
 
@@ -143,7 +162,8 @@ function tableauAnnuelle($ann){
   $query = "select ".$querySom.",".$somTotal.") as total from ( select ".$sousquery." FROM (
   SELECT sum( distance ) AS dist, v_id
   FROM v_sortie ";
-  if( isset($ann) ) $query .= " where year(date_sortie)=$ann ";
+  if(isset($ann)) $query .=" where year(date_sortie)=$ann and ".$whereUserId;
+  else $query .= "where ".$whereUserId;
   $query.= "
   GROUP BY  v_id
   )t

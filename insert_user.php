@@ -2,7 +2,55 @@
 session_start();
 include ("util.php");
 
-ecritEntete();
+ecritEntete("$(document).ready(function(){
+
+    var ".'$pseudo'." = $('#login'),
+        ".'$mdp'." = $('#pass'),
+        ".'$confirmation'." = $('#confirmation'),
+        ".'$mail'." = $('#mail'),
+        ".'$envoi'." = $('#submit');
+
+		".'$confirmation'.".keyup(function(){
+	        if($(this).val() != ".'$mdp'.".val()){ // si la confirmation est différente du mot de passe
+	            $(this).css({ // on rend le champ rouge
+	     	        borderColor : 'red',
+	        	color : 'red'
+	            });
+	        }
+	        else{
+		    $(this).css({ // si tout est bon, on le rend vert
+		        borderColor : 'green',
+		        color : 'green'
+		    });
+	        }
+	    });
+
+		".'$envoi'.".click(function(e){
+
+			if( ".'$mdp'.".val() != ".'$confirmation'.".val() || !verifier(".'$pseudo'.") || !verifier(".'$mail'.") || !verifier(".'$pass'.") ){
+				e.preventDefault(); // on annule la fonction par défaut du bouton d'envoi
+				alert('argument not valid');
+			}
+		});
+
+		function verifier(champ){
+			 if(champ.val() == ''){ // si le champ est vie.preventDefault(); // on annule la fonction par défaut du bouton d'envoide
+				 ".'$erreur'.".css('display', 'block'); // on affiche le message d'erreur
+				 champ.css({ // on rend le champ rouge
+					 borderColor : 'red',
+					 color : 'red'
+				 });
+				 return false;
+			 }else{
+				$(this).css({ // si tout est bon, on le rend vert
+				    borderColor : 'green',
+				    color : 'green'
+				});
+				return true;
+			}
+ 		}
+});
+");
 ecritHeaderMenu();
 
 // create formulaire
@@ -11,24 +59,6 @@ if( checkConnection() ){
 }else{
 
 ?>
-
-<script>
-function showHint(str) {
-   if (str.length == 0) {
-       document.getElementById("txtHint").innerHTML = "ava";
-       return;
-   } else {
-       var xmlhttp = new XMLHttpRequest();
-       xmlhttp.onreadystatechange = function() {
-           if (this.readyState == 4 && this.status == 200) {
-               document.getElementById("txtHint").innerHTML = this.responseText;
-           }
-       };
-       xmlhttp.open("GET", "connect.php?login=" + str, true);
-       xmlhttp.send();
-   }
-}
-</script>
 <section>
   <div id="txtHint" ></div>
   <form id="connexion" action="add_user.php" method="POST">
@@ -38,18 +68,18 @@ function showHint(str) {
     </p>
     <p>
       <label>Mot de Pass</label>
-      <input type="password" id="pass" value="pass1"/>
+      <input type="password" id="pass" name="pass"/>
     </p>
     <p>
       <label>Retapez votre mot de Pass</label>
-      <input type="password" value="pass2"/>
+      <input type="password" id="confirmation" name="confirmation"/>
     </p>
     <p>
       <label>Mail</label>
-      <input type="text" value="mail" placeholder="login@mail.com" />
+      <input type="text" id="mail" placeholder="login@mail.com" name="mail"/>
     </p>
     <p>
-      <input type="submit" id="submit" value="Create User"/>
+      <input type="submit" id="submit" />
     </p>
   </form>
 </section>

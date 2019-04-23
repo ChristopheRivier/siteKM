@@ -20,7 +20,7 @@ if( checkConnection() ){
     </p>
     <p>
       <label>Mot de Pass</label>
-      <input type="password" id="pass" value="pass1"/>
+      <input type="password" id="pass" name="pass"/>
     </p>
     <p>
       <input type="submit" id="submit" value="Login"/>
